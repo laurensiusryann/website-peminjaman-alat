@@ -31,7 +31,7 @@
     </div>
     <!-- Right: Image & Logo -->
     <div class="hidden md:flex w-1/2 relative items-center justify-center min-h-screen">
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Gudang" class="absolute inset-0 w-full h-full object-cover opacity-70">
+        <img src="{{ asset('images/storage-room.png') }}" alt="Gudang" class="absolute inset-0 w-full h-full object-cover opacity-70">
         <div class="relative z-10 flex flex-col items-center w-full">
             <div class="bg-white rounded-full w-40 h-40 flex items-center justify-center shadow-lg mb-4">
                 <span class="text-5xl font-bold font-serif text-gray-800">KP</span>
