@@ -98,8 +98,6 @@
                                 <th class="py-3 px-4 text-left">No</th>
                                 <th class="py-3 px-4 text-left">Kode Barang</th>
                                 <th class="py-3 px-4 text-left">Nama Barang</th>
-                                <th class="py-3 px-4 text-left">Merk</th>
-                                <th class="py-3 px-4 text-left">Jenis</th>
                                 <th class="py-3 px-4 text-left">Unit</th>
                             </tr>
                         </thead>
@@ -107,42 +105,38 @@
                             <tr class="border-b">
                                 <td class="py-3 px-4">1</td>
                                 <td class="py-3 px-4 font-bold">B4001</td>
-                                <td class="py-3 px-4">Meja Kursi Set</td>
-                                <td class="py-3 px-4">Informa</td>
-                                <td class="py-3 px-4">Furniture</td>
-                                <td class="py-3 px-4">20</td>
+                                <td class="py-3 px-4">Sound System</td>
+                                <td class="py-3 px-4">5</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4">2</td>
                                 <td class="py-3 px-4 font-bold">B4002</td>
-                                <td class="py-3 px-4">Camera</td>
-                                <td class="py-3 px-4">Sony</td>
-                                <td class="py-3 px-4">IT</td>
-                                <td class="py-3 px-4">2</td>
+                                <td class="py-3 px-4">Kabel HDMI</td>
+                                <td class="py-3 px-4">10</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4">3</td>
                                 <td class="py-3 px-4 font-bold">B4003</td>
-                                <td class="py-3 px-4">Epson E320</td>
-                                <td class="py-3 px-4">Epson</td>
-                                <td class="py-3 px-4">IT</td>
-                                <td class="py-3 px-4">19</td>
+                                <td class="py-3 px-4">Splitter</td>
+                                <td class="py-3 px-4">5</td>
                             </tr>
                             <tr class="border-b">
                                 <td class="py-3 px-4">4</td>
                                 <td class="py-3 px-4 font-bold">B4004</td>
-                                <td class="py-3 px-4">Kursi</td>
-                                <td class="py-3 px-4">Informa</td>
-                                <td class="py-3 px-4">Furniture</td>
-                                <td class="py-3 px-4">20</td>
+                                <td class="py-3 px-4">PC</td>
+                                <td class="py-3 px-4">8</td>
                             </tr>
                             <tr>
                                 <td class="py-3 px-4">5</td>
                                 <td class="py-3 px-4 font-bold">B4005</td>
                                 <td class="py-3 px-4">Meja</td>
-                                <td class="py-3 px-4">Ikea</td>
-                                <td class="py-3 px-4">Furniture</td>
-                                <td class="py-3 px-4">18</td>
+                                <td class="py-3 px-4">15</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4">5</td>
+                                <td class="py-3 px-4 font-bold">B4005</td>
+                                <td class="py-3 px-4">Kursi</td>
+                                <td class="py-3 px-4">30</td>
                             </tr>
                         </tbody>
                     </table>
