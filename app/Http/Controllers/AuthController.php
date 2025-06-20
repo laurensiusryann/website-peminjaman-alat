@@ -16,17 +16,23 @@ class AuthController extends Controller
 
     // Proses login
     public function login(Request $request) {
-    $request->validate([
-        'npm' => 'required',
-        'password' => 'required',
-    ]);
-    $user = User::where('npm', $request->npm)->first();
-    if ($user && \Hash::check($request->password, $user->password)) {
-        \Auth::login($user);
-        // Redirect ke dashboard setelah login sukses
-        return redirect()->route('dashboard_user');
-    }
-        return back()->withErrors(['npm' => 'NPM atau password salah']);
+        $request->validate([
+            'npm' => 'required',
+            'password' => 'required',
+            'role' => 'required|in:user,admin',
+        ]);
+        $user = User::where('npm', $request->npm)
+            ->where('role', $request->role)
+            ->first();
+        if ($user && Hash::check($request->password, $user->password)) {
+            Auth::login($user);
+            // Redirect sesuai role
+            if ($user->role === 'admin') {
+                return redirect()->route('dashboard_admin');
+            }
+            return redirect()->route('dashboard_user');
+        }
+        return back()->withErrors(['npm' => 'NPM, password, atau role salah']);
     }
 
     // Tampilkan form register
@@ -40,11 +46,13 @@ class AuthController extends Controller
             'name' => 'required',
             'npm' => 'required|unique:users',
             'password' => 'required|confirmed|min:6',
+            'role' => 'required|in:user,admin',
         ]);
         User::create([
             'name' => $request->name,
             'npm' => $request->npm,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
         ]);
         return redirect()->route('login')->with('success', 'Registrasi berhasil, silakan login.');
     }

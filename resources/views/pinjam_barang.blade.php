@@ -108,11 +108,12 @@
                             <label class="block font-semibold mb-2">Nama Barang</label>
                             <select name="nama_barang" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                                 <option value="">---Pilih Barang---</option>
-                                <option>Meja Kursi Set</option>
-                                <option>Sofa Panjang</option>
-                                <option>Epson E320</option>
-                                <option>Kursi</option>
+                                <option>Sound System</option>
+                                <option>Kabel HDMI</option>
+                                <option>Splitter</option>
+                                <option>PC</option>
                                 <option>Meja</option>
+                                <option>Kursi</option>
                             </select>
                         </div>
                         <div class="flex gap-4 mb-4">
