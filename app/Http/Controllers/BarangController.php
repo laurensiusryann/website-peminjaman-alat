@@ -12,6 +12,12 @@ class BarangController extends Controller
         $barangs = Barang::all();
         return view('data_barang_admin', compact('barangs'));
     }
+    
+    public function indexUser()
+    {
+        $barangs = Barang::all();
+        return view('data_barang', compact('barangs'));
+    }
 
     public function create()
     {

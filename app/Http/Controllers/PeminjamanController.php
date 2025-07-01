@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Peminjaman;
+use App\Models\Barang;
 
 class PeminjamanController extends Controller
 {
@@ -14,7 +15,9 @@ class PeminjamanController extends Controller
 
     public function create()
     {
-        return view('pinjam_barang');
+        // Ambil semua barang yang sudah ditambahkan admin
+        $barangs = Barang::all();
+        return view('pinjam_barang', compact('barangs'));
     }
 
     public function store(Request $request)
@@ -24,10 +27,23 @@ class PeminjamanController extends Controller
             'tanggal_pinjam' => 'required|date',
             'nama_barang' => 'required',
             'jumlah' => 'required|integer|min:1',
-            'tanggal_kembali' => 'required',
+            'tanggal_kembali' => 'required|date|after_or_equal:tanggal_pinjam',
             'tujuan' => 'required',
         ]);
 
+        // Cari barang berdasarkan nama_barang
+        $barang = Barang::where('nama_barang', $request->nama_barang)->first();
+
+        // Cek stok cukup
+        if (!$barang || $barang->unit < $request->jumlah) {
+            return back()->withErrors(['jumlah' => 'Stok barang tidak mencukupi!']);
+        }
+
+        // Kurangi stok barang
+        $barang->unit -= $request->jumlah;
+        $barang->save();
+
+        // Simpan peminjaman
         Peminjaman::create([
             'nama_peminjam' => $request->nama_peminjam,
             'tanggal_pinjam' => $request->tanggal_pinjam,

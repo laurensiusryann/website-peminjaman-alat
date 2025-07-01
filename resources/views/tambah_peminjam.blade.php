@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Barang | KampusPinjam</title>
+    <title>Tambah Peminjam | KampusPinjam</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
@@ -29,19 +29,19 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('data_barang_admin') }}" class="flex items-center px-6 py-3 bg-birutua2 rounded text-white font-semibold border-l-4 border-orange-400">
+                        <a href="{{ route('data_barang_admin') }}" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-box mr-3 text-orange-400 text-lg"></i>
                             <span>Data Barang</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
+                        <a href="{{ route('data_peminjam') }}" class="flex items-center px-6 py-3 bg-birutua2 rounded text-white font-semibold border-l-4 border-orange-400">
                             <i class="fa-solid fa-users mr-3 text-orange-400 text-lg"></i>
                             <span>Data Peminjam</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
+                        <a href="{{ route('transaksi_peminjaman') }}" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-coins mr-3 text-orange-400 text-lg"></i>
                             <span>Transaksi Peminjaman</span>
                         </a>
@@ -66,6 +66,7 @@
         </aside>
         <!-- Main Content -->
         <main class="flex-1 flex flex-col bg-white">
+            <!-- Header dan area atas -->
             <div class="bg-birutua">
                 <header class="flex items-center justify-between px-8 py-6">
                     <div></div>
@@ -81,13 +82,14 @@
                 </header>
                 <div class="px-8 pt-2 pb-8"></div>
             </div>
+            <!-- Konten utama -->
             <div class="flex-1 px-8 pb-8 bg-white flex justify-center items-start">
                 <div class="bg-white rounded shadow border w-full max-w-3xl mt-12 p-8">
                     <!-- Breadcrumb -->
                     <div class="flex items-center mb-6">
                         <span class="text-blue-600 font-semibold flex items-center">
-                            <i class="fa-solid fa-box mr-2"></i>
-                            Edit Barang
+                            <i class="fa-solid fa-users mr-2"></i>
+                            Tambah Peminjam
                         </span>
                     </div>
                     @if($errors->any())
@@ -95,32 +97,21 @@
                             {{ $errors->first() }}
                         </div>
                     @endif
-                    <form method="POST" action="{{ route('barang.update', $barang->id) }}">
+                    <form method="POST" action="{{ route('tambah_peminjam.store') }}">
                         @csrf
-                        @method('PUT')
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                             <div>
-                                <label class="block font-semibold mb-2">Kode Barang</label>
-                                <input type="text" name="kode_barang" value="{{ old('kode_barang', $barang->kode_barang) }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                                <label class="block font-semibold mb-2">Nama Peminjam</label>
+                                <input type="text" name="nama" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                             </div>
                             <div>
-                                <label class="block font-semibold mb-2">Nama Barang</label>
-                                <input type="text" name="nama_barang" value="{{ old('nama_barang', $barang->nama_barang) }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                            <div>
-                                <label class="block font-semibold mb-2">Merk</label>
-                                <input type="text" name="merk" value="{{ old('merk', $barang->merk) }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                            </div>
-                            <div>
-                                <label class="block font-semibold mb-2">Jenis</label>
-                                <input type="text" name="jenis" value="{{ old('jenis', $barang->jenis) }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                                <label class="block font-semibold mb-2">NPM</label>
+                                <input type="text" name="npm" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                             </div>
                         </div>
                         <div class="mb-6">
-                            <label class="block font-semibold mb-2">Unit</label>
-                            <input type="number" name="unit" value="{{ old('unit', $barang->unit) }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                            <label class="block font-semibold mb-2">Password</label>
+                            <input type="text" name="password" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                         </div>
                         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded font-semibold">Submit</button>
                     </form>

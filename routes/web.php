@@ -2,6 +2,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\PeminjamController;
 
 Route::get('/', function () {
     return view('login');
@@ -35,9 +36,7 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard_admin');
 
     // Data Barang untuk User
-    Route::get('/data_barang', function () {
-        return view('data_barang');
-    })->name('data_barang');
+    Route::get('/data_barang', [BarangController::class, 'indexUser'])->name('data_barang');
 
     // Data Barang untuk Admin
     Route::get('/data_barang_admin', [BarangController::class, 'index'])->name('data_barang_admin');
@@ -47,10 +46,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.update');
     Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
 
-    // Form tambah barang (Admin)
-    Route::get('/tambah_barang', function () {
-        return view('tambah_barang');
-    })->name('tambah_barang');
+    // Data Peminjam (Admin)
+    Route::get('/data_peminjam', [PeminjamController::class, 'index'])->name('data_peminjam');
+    Route::get('/tambah_peminjam', [PeminjamController::class, 'create'])->name('tambah_peminjam');
+    Route::post('/tambah_peminjam', [PeminjamController::class, 'store'])->name('tambah_peminjam.store');
 
     // Daftar transaksi peminjaman
     Route::get('/transaksi_peminjaman', [PeminjamanController::class, 'index'])->name('transaksi_peminjaman');
