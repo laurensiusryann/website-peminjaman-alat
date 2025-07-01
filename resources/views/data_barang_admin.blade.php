@@ -56,7 +56,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center px-8 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
+                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-rotate-left mr-3 text-blue-600 text-lg"></i>
                             <span>Laporan Pengembalian</span>
                         </a>

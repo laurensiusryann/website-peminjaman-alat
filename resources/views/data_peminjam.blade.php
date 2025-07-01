@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Barang | KampusPinjam</title>
+    <title>Data Peminjam | KampusPinjam</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
@@ -29,19 +29,19 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('data_barang_admin') }}" class="flex items-center px-6 py-3 bg-birutua2 rounded text-white font-semibold border-l-4 border-orange-400">
+                        <a href="{{ route('data_barang_admin') }}" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-box mr-3 text-orange-400 text-lg"></i>
                             <span>Data Barang</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
+                        <a href="{{ route('data_peminjam') }}" class="flex items-center px-6 py-3 bg-birutua2 rounded text-white font-semibold border-l-4 border-orange-400">
                             <i class="fa-solid fa-users mr-3 text-orange-400 text-lg"></i>
                             <span>Data Peminjam</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
+                        <a href="{{ route('transaksi_peminjaman') }}" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-coins mr-3 text-orange-400 text-lg"></i>
                             <span>Transaksi Peminjaman</span>
                         </a>
@@ -66,6 +66,7 @@
         </aside>
         <!-- Main Content -->
         <main class="flex-1 flex flex-col bg-white">
+            <!-- Header dan area atas -->
             <div class="bg-birutua">
                 <header class="flex items-center justify-between px-8 py-6">
                     <div></div>
@@ -79,51 +80,55 @@
                         </div>
                     </div>
                 </header>
-                <div class="px-8 pt-2 pb-8"></div>
-            </div>
-            <div class="flex-1 px-8 pb-8 bg-white flex justify-center items-start">
-                <div class="bg-white rounded shadow border w-full max-w-3xl mt-12 p-8">
+                <div class="px-8 pt-2 pb-8">
                     <!-- Breadcrumb -->
-                    <div class="flex items-center mb-6">
-                        <span class="text-blue-600 font-semibold flex items-center">
-                            <i class="fa-solid fa-box mr-2"></i>
-                            Edit Barang
+                    <div class="flex items-center space-x-2 mb-6">
+                        <span class="bg-white text-blue-600 px-3 py-2 rounded font-semibold flex items-center shadow">
+                            <i class="fa-solid fa-users mr-2"></i>
+                            / Data Peminjam
                         </span>
                     </div>
-                    @if($errors->any())
-                        <div class="mb-4 text-red-600">
-                            {{ $errors->first() }}
-                        </div>
-                    @endif
-                    <form method="POST" action="{{ route('barang.update', $barang->id) }}">
-                        @csrf
-                        @method('PUT')
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                            <div>
-                                <label class="block font-semibold mb-2">Kode Barang</label>
-                                <input type="text" name="kode_barang" value="{{ old('kode_barang', $barang->kode_barang) }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                            </div>
-                            <div>
-                                <label class="block font-semibold mb-2">Nama Barang</label>
-                                <input type="text" name="nama_barang" value="{{ old('nama_barang', $barang->nama_barang) }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                            <div>
-                                <label class="block font-semibold mb-2">Merk</label>
-                                <input type="text" name="merk" value="{{ old('merk', $barang->merk) }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                            </div>
-                            <div>
-                                <label class="block font-semibold mb-2">Jenis</label>
-                                <input type="text" name="jenis" value="{{ old('jenis', $barang->jenis) }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                            </div>
-                        </div>
-                        <div class="mb-6">
-                            <label class="block font-semibold mb-2">Unit</label>
-                            <input type="number" name="unit" value="{{ old('unit', $barang->unit) }}" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                        </div>
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded font-semibold">Submit</button>
-                    </form>
+                </div>
+            </div>
+            <!-- Konten utama putih -->
+            <div class="flex-1 px-8 pb-8 bg-white">
+                <div class="bg-white rounded shadow overflow-x-auto w-full max-w-4xl mx-auto mt-8">
+                    <div class="flex items-center justify-between px-6 py-3 border-b font-semibold">
+                        <span>Data Peminjam</span>
+                        <a href="{{ route('tambah_peminjam') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-semibold flex items-center">
+                            <i class="fa-solid fa-plus mr-2"></i>Tambah Peminjam
+                        </a>
+                    </div>
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="py-3 px-4 text-left">No</th>
+                                <th class="py-3 px-4 text-left">Nama Peminjam</th>
+                                <th class="py-3 px-4 text-left">NPM</th>
+                                <th class="py-3 px-4 text-left">Password</th>
+                                <th class="py-3 px-4 text-center"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($peminjams as $peminjam)
+                            <tr class="border-b">
+                                <td class="py-3 px-4">{{ $loop->iteration }}</td>
+                                <td class="py-3 px-4">{{ $peminjam->nama }}</td>
+                                <td class="py-3 px-4">{{ $peminjam->npm }}</td>
+                                <td class="py-3 px-4">{{ $peminjam->password }}</td>
+                                <td class="py-3 px-4 text-center">
+                                    <button class="text-gray-500 hover:text-gray-700 px-2">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5" class="py-3 px-4 text-center text-gray-400">Belum ada data peminjam.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>

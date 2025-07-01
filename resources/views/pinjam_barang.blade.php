@@ -1,4 +1,3 @@
-<!-- filepath: [pinjam_barang.blade.php](http://_vscodecontentref_/6) -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -41,12 +40,6 @@
                             <span>Transaksi Peminjaman</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('pinjam_barang') }}" class="flex items-center px-6 py-3 bg-birutua2 rounded text-white font-semibold border-l-4 border-blue-600">
-                            <i class="fa-solid fa-plus mr-3 text-blue-600 text-lg"></i>
-                            <span>Pinjam Barang</span>
-                        </a>
-                    </li>
                 </ul>
                 <div class="border-b border-birutua2 my-4"></div>
                 <ul class="space-y-2">
@@ -57,7 +50,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center px-8 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
+                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-rotate-left mr-3 text-blue-600 text-lg"></i>
                             <span>Laporan Pengembalian</span>
                         </a>
@@ -108,12 +101,9 @@
                             <label class="block font-semibold mb-2">Nama Barang</label>
                             <select name="nama_barang" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                                 <option value="">---Pilih Barang---</option>
-                                <option>Sound System</option>
-                                <option>Kabel HDMI</option>
-                                <option>Splitter</option>
-                                <option>PC</option>
-                                <option>Meja</option>
-                                <option>Kursi</option>
+                                @foreach($barangs as $barang)
+                                    <option value="{{ $barang->nama_barang }}">{{ $barang->nama_barang }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="flex gap-4 mb-4">

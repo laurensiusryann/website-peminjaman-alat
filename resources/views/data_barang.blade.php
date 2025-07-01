@@ -50,7 +50,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center px-8 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
+                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-rotate-left mr-3 text-blue-600 text-lg"></i>
                             <span>Laporan Pengembalian</span>
                         </a>
@@ -102,42 +102,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse($barangs as $barang)
                             <tr class="border-b">
-                                <td class="py-3 px-4">1</td>
-                                <td class="py-3 px-4 font-bold">B4001</td>
-                                <td class="py-3 px-4">Sound System</td>
-                                <td class="py-3 px-4">5</td>
+                                <td class="py-3 px-4">{{ $loop->iteration }}</td>
+                                <td class="py-3 px-4 font-bold">{{ $barang->kode_barang }}</td>
+                                <td class="py-3 px-4">{{ $barang->nama_barang }}</td>
+                                <td class="py-3 px-4">{{ $barang->unit }}</td>
                             </tr>
-                            <tr class="border-b">
-                                <td class="py-3 px-4">2</td>
-                                <td class="py-3 px-4 font-bold">B4002</td>
-                                <td class="py-3 px-4">Kabel HDMI</td>
-                                <td class="py-3 px-4">10</td>
-                            </tr>
-                            <tr class="border-b">
-                                <td class="py-3 px-4">3</td>
-                                <td class="py-3 px-4 font-bold">B4003</td>
-                                <td class="py-3 px-4">Splitter</td>
-                                <td class="py-3 px-4">5</td>
-                            </tr>
-                            <tr class="border-b">
-                                <td class="py-3 px-4">4</td>
-                                <td class="py-3 px-4 font-bold">B4004</td>
-                                <td class="py-3 px-4">PC</td>
-                                <td class="py-3 px-4">8</td>
-                            </tr>
+                            @empty
                             <tr>
-                                <td class="py-3 px-4">5</td>
-                                <td class="py-3 px-4 font-bold">B4005</td>
-                                <td class="py-3 px-4">Meja</td>
-                                <td class="py-3 px-4">15</td>
+                                <td colspan="4" class="py-3 px-4 text-center text-gray-400">Belum ada data barang.</td>
                             </tr>
-                            <tr>
-                                <td class="py-3 px-4">5</td>
-                                <td class="py-3 px-4 font-bold">B4005</td>
-                                <td class="py-3 px-4">Kursi</td>
-                                <td class="py-3 px-4">30</td>
-                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
