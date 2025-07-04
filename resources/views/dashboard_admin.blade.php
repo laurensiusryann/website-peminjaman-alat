@@ -140,10 +140,6 @@
         </main>
     </div>
 </body>
-<<<<<<< HEAD
 </html>
 
 <!-- cek push git -->
-=======
-</html>
->>>>>>> develop
