@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('jumlah');
             $table->string('tanggal_kembali');
             $table->string('tujuan');
-            $table->string('status')->default('Dipinjam');
+            $table->string('status')->default('Menunggu Konfirmasi');
             $table->timestamps();
         });
     }
