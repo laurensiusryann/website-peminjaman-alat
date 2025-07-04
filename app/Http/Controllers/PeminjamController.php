@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Peminjam;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class PeminjamController extends Controller
@@ -11,7 +11,7 @@ class PeminjamController extends Controller
     // Tampilkan daftar peminjam
     public function index()
     {
-        $peminjams = Peminjam::all();
+        $peminjams = User::where('role', 'user')->get();
         return view('data_peminjam', compact('peminjams'));
     }
 
@@ -25,15 +25,16 @@ class PeminjamController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
-            'npm' => 'required|unique:peminjams',
+            'name' => 'required',
+            'npm' => 'required|unique:users',
             'password' => 'required|min:4',
         ]);
 
-        Peminjam::create([
-            'nama' => $request->nama,
+        User::create([
+            'name' => $request->name,
             'npm' => $request->npm,
-            'password' => Hash::make($request->password), // Simpan password terenkripsi
+            'password' => Hash::make($request->password),
+            'role' => 'user',
         ]);
 
         return redirect()->route('data_peminjam')->with('success', 'Peminjam berhasil ditambahkan!');

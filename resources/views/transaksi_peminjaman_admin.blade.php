@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Peminjam | KampusPinjam</title>
+    <title>Transaksi Peminjaman | KampusPinjam</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
@@ -11,6 +11,7 @@
         .bg-birutua2 { background-color: #181A23 !important; }
         .border-birutua2 { border-color: #181A23 !important; }
         .border-birutua { border-color: #23253A !important; }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; }
     </style>
 </head>
 <body class="bg-white min-h-screen">
@@ -70,7 +71,6 @@
         </aside>
         <!-- Main Content -->
         <main class="flex-1 flex flex-col bg-white">
-            <!-- Header dan area atas -->
             <div class="bg-birutua">
                 <header class="flex items-center justify-between px-8 py-6">
                     <div></div>
@@ -85,50 +85,71 @@
                     </div>
                 </header>
                 <div class="px-8 pt-2 pb-8">
-                    <!-- Breadcrumb -->
                     <div class="flex items-center space-x-2 mb-6">
                         <span class="bg-white text-blue-600 px-3 py-2 rounded font-semibold flex items-center shadow">
-                            <i class="fa-solid fa-users mr-2"></i>
-                            / Data Peminjam
+                            <i class="fa-solid fa-coins mr-2"></i>
+                            / Transaksi Peminjaman
                         </span>
                     </div>
                 </div>
             </div>
-            <!-- Konten utama putih -->
             <div class="flex-1 px-8 pb-8 bg-white">
-                <div class="bg-white rounded shadow overflow-x-auto w-full max-w-4xl mx-auto mt-8">
+                <div class="bg-white rounded shadow overflow-x-auto w-full max-w-5xl mx-auto mt-8">
                     <div class="flex items-center justify-between px-6 py-3 border-b font-semibold">
-                        <span>Data Peminjam</span>
-                        <a href="{{ route('tambah_peminjam') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-semibold flex items-center">
-                            <i class="fa-solid fa-plus mr-2"></i>Tambah Peminjam
-                        </a>
+                        <span>Transaksi Peminjaman</span>
                     </div>
                     <table class="min-w-full text-sm">
                         <thead>
                             <tr class="border-b">
                                 <th class="py-3 px-4 text-left">No</th>
-                                <th class="py-3 px-4 text-left">User</th>
-                                <th class="py-3 px-4 text-left">NPM</th>
-                                <th class="py-3 px-4 text-left">Password</th>
-                                <th class="py-3 px-4 text-center"></th>
+                                <th class="py-3 px-4 text-left">Tanggal Pinjam</th>
+                                <th class="py-3 px-4 text-left">Nama Peminjam</th>
+                                <th class="py-3 px-4 text-left">Nama Barang</th>
+                                <th class="py-3 px-4 text-left">Jumlah</th>
+                                <th class="py-3 px-4 text-left">Status</th>
+                                <th class="py-3 px-4 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($peminjams as $peminjam)
+                            @forelse($peminjaman as $item)
                             <tr class="border-b">
                                 <td class="py-3 px-4">{{ $loop->iteration }}</td>
-                                <td class="py-3 px-4">{{ $peminjam->name }}</td>
-                                <td class="py-3 px-4">{{ $peminjam->npm }}</td>
-                                <td class="py-3 px-4">{{ $peminjam->password }}</td>
+                                <td class="py-3 px-4">
+                                    {{ $item->tanggal_pinjam }}<br>
+                                    {{ $item->tanggal_kembali }}
+                                </td>
+                                <td class="py-3 px-4">{{ $item->nama_peminjam }}</td>
+                                <td class="py-3 px-4">{{ $item->nama_barang }}</td>
+                                <td class="py-3 px-4">{{ $item->jumlah }}</td>
+                                <td class="py-3 px-4">
+                                    @if($item->status == 'Menunggu Konfirmasi')
+                                        <span class="status-dot" style="background:#fbbf24"></span>Menunggu Konfirmasi
+                                    @elseif($item->status == 'Disetujui')
+                                        <span class="status-dot" style="background:#22c55e"></span>Disetujui
+                                    @elseif($item->status == 'Ditolak')
+                                        <span class="status-dot" style="background:#ef4444"></span>Ditolak
+                                    @else
+                                        <span class="status-dot" style="background:#a3a3a3"></span>{{ $item->status }}
+                                    @endif
+                                </td>
                                 <td class="py-3 px-4 text-center">
-                                    <button class="text-gray-500 hover:text-gray-700 px-2">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </button>
+                                    @if($item->status == 'Menunggu Konfirmasi')
+                                        <form action="{{ route('peminjaman.approve', $item->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button type="submit" class="text-green-600 hover:underline mr-2">Setujui</button>
+                                        </form>
+                                        <form action="{{ route('peminjaman.reject', $item->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button type="submit" class="text-red-600 hover:underline">Tolak</button>
+                                        </form>
+                                    @else
+                                        <span class="text-gray-400">-</span>
+                                    @endif
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" class="py-3 px-4 text-center text-gray-400">Belum ada data peminjam.</td>
+                                <td colspan="7" class="py-3 px-4 text-center text-gray-400">Belum ada transaksi peminjaman.</td>
                             </tr>
                             @endforelse
                         </tbody>

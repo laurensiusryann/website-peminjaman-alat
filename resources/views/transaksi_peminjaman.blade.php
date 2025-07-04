@@ -11,6 +11,7 @@
         .bg-birutua2 { background-color: #181A23 !important; }
         .border-birutua2 { border-color: #181A23 !important; }
         .border-birutua { border-color: #23253A !important; }
+        .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; }
     </style>
 </head>
 <body class="bg-white min-h-screen">
@@ -40,12 +41,6 @@
                             <span>Transaksi Peminjaman</span>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a href="{{ route('pinjam_barang') }}" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
-                            <i class="fa-solid fa-plus mr-3 text-blue-600 text-lg"></i>
-                            <span>Pinjam Barang</span>
-                        </a>
-                    </li> -->
                 </ul>
                 <div class="border-b border-birutua2 my-4"></div>
                 <ul class="space-y-2">
@@ -120,13 +115,29 @@
                                 <td class="py-3 px-4">{{ $item->nama_barang }}</td>
                                 <td class="py-3 px-4">{{ $item->jumlah }}</td>
                                 <td class="py-3 px-4">
-                                    <span class="inline-flex items-center {{ $item->status == 'Dikembalikan' ? 'text-blue-600' : 'text-yellow-600' }}">
-                                        <span class="w-2 h-2 rounded-full {{ $item->status == 'Dikembalikan' ? 'bg-blue-600' : 'bg-yellow-400' }} mr-2"></span>
-                                        {{ $item->status }}
-                                    </span>
+                                    @if($item->status == 'Menunggu Konfirmasi')
+                                        <span class="status-dot" style="background:#fbbf24"></span>
+                                        <span class="text-yellow-600 font-semibold">Menunggu Konfirmasi</span>
+                                    @elseif($item->status == 'Disetujui')
+                                        <span class="status-dot" style="background:#22c55e"></span>
+                                        <span class="text-green-600 font-semibold">Disetujui</span>
+                                    @elseif($item->status == 'Ditolak')
+                                        <span class="status-dot" style="background:#ef4444"></span>
+                                        <span class="text-red-600 font-semibold">Ditolak</span>
+                                    @else
+                                        <span class="status-dot" style="background:#a3a3a3"></span>
+                                        <span class="text-gray-600 font-semibold">{{ $item->status }}</span>
+                                    @endif
                                 </td>
                                 <td class="py-3 px-4">
-                                    <a href="#" class="text-blue-600 hover:underline">Detail</a>
+                                    <a href="{{ route('peminjaman.detail', $item->id) }}" class="text-blue-600 hover:underline">Detail</a>
+                                    @if($item->status == 'Menunggu Konfirmasi')
+                                        <form action="{{ route('peminjaman.cancel', $item->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:underline ml-2" onclick="return confirm('Batalkan peminjaman ini?')">Batalkan</button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                             @empty
