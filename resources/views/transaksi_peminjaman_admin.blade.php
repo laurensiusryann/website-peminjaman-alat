@@ -103,6 +103,10 @@
                             <tr class="border-b">
                                 <th class="py-3 px-4 text-left">No</th>
                                 <th class="py-3 px-4 text-left">Tanggal Pinjam</th>
+<<<<<<< HEAD
+=======
+                                <th class="py-3 px-4 text-left">Tanggal Kembali</th>
+>>>>>>> develop
                                 <th class="py-3 px-4 text-left">Nama Peminjam</th>
                                 <th class="py-3 px-4 text-left">Nama Barang</th>
                                 <th class="py-3 px-4 text-left">Jumlah</th>
@@ -115,7 +119,13 @@
                             <tr class="border-b">
                                 <td class="py-3 px-4">{{ $loop->iteration }}</td>
                                 <td class="py-3 px-4">
+<<<<<<< HEAD
                                     {{ $item->tanggal_pinjam }}<br>
+=======
+                                    {{ $item->tanggal_pinjam }}
+                                </td>
+                                <td class="py-3 px-4">
+>>>>>>> develop
                                     {{ $item->tanggal_kembali }}
                                 </td>
                                 <td class="py-3 px-4">{{ $item->nama_peminjam }}</td>
