@@ -1,8 +1,11 @@
 <?php
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PeminjamController;
+use App\Http\Controllers\DashboardUserController;
+
 
 Route::get('/', function () {
     return view('login');
@@ -25,10 +28,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // PROTECTED ROUTES (hanya untuk user login & admin)
 Route::middleware('auth')->group(function () {
-    // Dashboard User
-    Route::get('/dashboard_user', function () {
-        return view('dashboard_user');
-    })->name('dashboard_user');
+
+    // Dashboard User — GANTI fungsi langsung → controller
+    Route::get('/dashboard_user', [DashboardUserController::class, 'index'])->name('dashboard_user');
 
     // Dashboard Admin
     Route::get('/dashboard_admin', function () {
@@ -53,16 +55,12 @@ Route::middleware('auth')->group(function () {
 
     // Daftar transaksi peminjaman (User)
     Route::get('/transaksi_peminjaman', [PeminjamanController::class, 'index'])->name('transaksi_peminjaman');
-    // Form pinjam barang
     Route::get('/pinjam_barang', [PeminjamanController::class, 'create'])->name('pinjam_barang');
-    // Proses simpan pinjam barang
     Route::post('/pinjam_barang', [PeminjamanController::class, 'store'])->name('pinjam_barang.store');
-    // Batalkan peminjaman (User)
     Route::delete('/peminjaman/{id}/cancel', [PeminjamanController::class, 'cancel'])->name('peminjaman.cancel');
-    // Detail peminjaman (User)
     Route::get('/peminjaman/{id}/detail', [PeminjamanController::class, 'show'])->name('peminjaman.detail');
 
-    // Transaksi Peminjaman Admin (daftar & aksi setujui/tolak)
+    // Transaksi Peminjaman Admin
     Route::get('/transaksi_peminjaman_admin', [PeminjamanController::class, 'indexAdmin'])->name('transaksi_peminjaman_admin');
     Route::post('/peminjaman/{id}/approve', [PeminjamanController::class, 'approve'])->name('peminjaman.approve');
     Route::post('/peminjaman/{id}/reject', [PeminjamanController::class, 'reject'])->name('peminjaman.reject');
