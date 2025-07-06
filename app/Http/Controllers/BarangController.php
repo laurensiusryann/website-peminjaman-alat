@@ -12,7 +12,7 @@ class BarangController extends Controller
         $barangs = Barang::all();
         return view('data_barang_admin', compact('barangs'));
     }
-    
+
     public function indexUser()
     {
         $barangs = Barang::all();
@@ -21,22 +21,49 @@ class BarangController extends Controller
 
     public function create()
     {
-        return view('tambah_barang');
+        $lastBarang = Barang::latest('id')->first();
+        $lastKode = $lastBarang ? $lastBarang->kode_barang : null;
+
+        $prefix = "BRG";
+        if ($lastKode) {
+            $lastNumber = (int) str_replace($prefix, '', $lastKode);
+            $newNumber = $lastNumber + 1;
+        } else {
+            $newNumber = 1;
+        }
+
+        $kodeBarang = $prefix . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+
+        return view('tambah_barang', compact('kodeBarang'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'kode_barang' => 'required|unique:barang',
             'nama_barang' => 'required',
             'merk' => 'required',
             'jenis' => 'required',
             'unit' => 'required|integer|min:1'
         ]);
 
-        Barang::create($request->all());
+        $lastBarang = Barang::latest('id')->first();
+        $lastKode = $lastBarang ? $lastBarang->kode_barang : null;
+
+        $prefix = "BRG";
+        $newNumber = $lastKode ? ((int) str_replace($prefix, '', $lastKode) + 1) : 1;
+        $kodeBarang = $prefix . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+
+        Barang::create([
+            'kode_barang' => $kodeBarang,
+            'nama_barang' => $request->nama_barang,
+            'merk' => $request->merk,
+            'jenis' => $request->jenis,
+            'unit' => $request->unit,
+        ]);
+
         return redirect()->route('data_barang_admin')->with('success', 'Barang berhasil ditambahkan!');
     }
+
     public function edit($id)
     {
         $barang = Barang::findOrFail($id);
