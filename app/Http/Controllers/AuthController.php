@@ -106,4 +106,29 @@ class AuthController extends Controller
         }
         return redirect()->route('password.request')->withErrors(['npm' => 'NPM tidak ditemukan']);
     }
+
+    public function editProfile()
+    {
+        $user = auth()->user();
+        return view('profile_edit', [
+            'full_name' => $user->full_name ?? $user->name ?? '',
+            'username' => $user->username ?? $user->email ?? '',
+        ]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+        ]);
+
+        $user = auth()->user();
+        $user->full_name = $request->input('full_name');
+        $user->username = $request->input('username');
+        $user->save();
+
+        // Redirect ke halaman profile setelah update
+        return redirect()->route('profile')->with('success', 'Profile updated!');
+    }
 }

@@ -57,4 +57,26 @@ Route::middleware('auth')->group(function () {
     Route::get('/pinjam_barang', [PeminjamanController::class, 'create'])->name('pinjam_barang');
     // Proses simpan pinjam barang
     Route::post('/pinjam_barang', [PeminjamanController::class, 'store'])->name('pinjam_barang.store');
+
+    // Profile routes
+    Route::get('/profile', function () {
+        $user = auth()->user();
+        return view('profile', [
+            'full_name' => $user->full_name ?? $user->name ?? '',
+            'username' => $user->username ?? $user->email ?? '',
+        ]);
+    })->name('profile');
+    Route::get('/profile/edit', [AuthController::class, 'editProfile'])->name('profile.edit');
+    Route::post('/profile/edit', [AuthController::class, 'updateProfile'])->name('profile.update');
+
+    // Tambahkan ini:
+    Route::get('/laporan_peminjaman', function () {
+        // Ganti dengan controller jika ada
+        return view('laporan_peminjaman');
+    })->name('laporan_peminjaman');
+
+    Route::get('/laporan_pengembalian', function () {
+        // Ganti dengan controller jika ada
+        return view('laporan_pengembalian');
+    })->name('laporan_pengembalian');
 });
