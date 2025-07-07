@@ -99,7 +99,7 @@
                             <tr class="border-b">
                                 <th class="py-3 px-4 text-left">No</th>
                                 <th class="py-3 px-4 text-left">Tanggal Pinjam</th>
-                                <th class="py-3 px-4 text-left">Tanggal Kembai</th>
+                                <th class="py-3 px-4 text-left">Tanggal Kembali</th>
                                 <th class="py-3 px-4 text-left">Nama Peminjam</th>
                                 <th class="py-3 px-4 text-left">Nama Barang</th>
                                 <th class="py-3 px-4 text-left">Jumlah</th>

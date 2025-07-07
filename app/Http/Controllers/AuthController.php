@@ -52,6 +52,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'npm' => $request->npm,
             'password' => Hash::make($request->password),
+            'plain_password' => $request->password, // Simpan password asli
             'role' => $request->role,
         ]);
         return redirect()->route('login')->with('success', 'Registrasi berhasil, silakan login.');
@@ -100,6 +101,7 @@ class AuthController extends Controller
         $user = User::where('npm', $npm)->first();
         if ($user) {
             $user->password = Hash::make($request->password);
+            $user->plain_password = $request->password; // Update password asli
             $user->save();
             session()->forget('reset_npm');
             return redirect()->route('login')->with('success', 'Password berhasil direset. Silakan login.');
