@@ -51,7 +51,7 @@ Mahasiswa dan admin dapat mendaftar/login. Role pengguna menentukan akses menu.
 ### Form Peminjaman
 Mahasiswa memilih alat, tanggal pinjam/kembali, dan mengisi tujuan peminjaman.
 
-### 🛠Manajemen Alat
+### Manajemen Alat
 Admin dapat menambah/edit/hapus alat, menyetujui peminjaman, melihat jadwal, dan status alat.
 
 ### Ketersediaan Alat
