@@ -119,7 +119,7 @@
                                 <td class="py-3 px-4">{{ $loop->iteration }}</td>
                                 <td class="py-3 px-4">{{ $peminjam->name }}</td>
                                 <td class="py-3 px-4">{{ $peminjam->npm }}</td>
-                                <td class="py-3 px-4">{{ $peminjam->plain_password }}</td> <!-- Tampilkan password asli -->
+                                <td class="py-3 px-4">{{ $peminjam->plain_password }}</td>
                                 <td class="py-3 px-4 text-center">
                                     <button class="text-gray-500 hover:text-gray-700 px-2">
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
