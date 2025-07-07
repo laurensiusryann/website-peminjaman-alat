@@ -23,29 +23,25 @@
             <nav class="flex-1 py-4 flex flex-col gap-2">
                 <ul class="space-y-2">
                     <li>
-                        <a href="{{ route('dashboard_admin') }}"
-                        class="flex items-center px-6 py-3 {{ Route::is('dashboard_admin') ? 'bg-birutua2 border-l-4 border-blue-600' : 'hover:bg-birutua2' }} rounded text-white font-semibold transition">
+                        <a href="{{ route('dashboard_admin') }}" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-display mr-3 text-blue-600 text-lg"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('data_barang_admin') }}"
-                        class="flex items-center px-6 py-3 {{ Route::is('data_barang_admin') ? 'bg-birutua2 border-l-4 border-orange-400' : 'hover:bg-birutua2' }} rounded text-white font-semibold transition">
+                        <a href="{{ route('data_barang_admin') }}" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-box mr-3 text-orange-400 text-lg"></i>
                             <span>Data Barang</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('data_peminjam') }}"
-                        class="flex items-center px-6 py-3 {{ Route::is('data_peminjam') ? 'bg-birutua2 border-l-4 border-orange-400' : 'hover:bg-birutua2' }} rounded text-white font-semibold transition">
+                        <a href="{{ route('data_peminjam') }}" class="flex items-center px-6 py-3 bg-birutua2 rounded text-white font-semibold border-l-4 border-orange-400">
                             <i class="fa-solid fa-users mr-3 text-orange-400 text-lg"></i>
                             <span>Data Peminjam</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('transaksi_peminjaman_admin') }}"
-                        class="flex items-center px-6 py-3 {{ Route::is('transaksi_peminjaman_admin') ? 'bg-birutua2 border-l-4 border-orange-400' : 'hover:bg-birutua2' }} rounded text-white font-semibold transition">
+                        <a href="{{ route('transaksi_peminjaman') }}" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-coins mr-3 text-orange-400 text-lg"></i>
                             <span>Transaksi Peminjaman</span>
                         </a>
@@ -107,7 +103,7 @@
                         <thead>
                             <tr class="border-b">
                                 <th class="py-3 px-4 text-left">No</th>
-                                <th class="py-3 px-4 text-left">User</th>
+                                <th class="py-3 px-4 text-left">Nama Peminjam</th>
                                 <th class="py-3 px-4 text-left">NPM</th>
                                 <th class="py-3 px-4 text-left">Password</th>
                                 <th class="py-3 px-4 text-center"></th>
@@ -117,7 +113,7 @@
                             @forelse($peminjams as $peminjam)
                             <tr class="border-b">
                                 <td class="py-3 px-4">{{ $loop->iteration }}</td>
-                                <td class="py-3 px-4">{{ $peminjam->name }}</td>
+                                <td class="py-3 px-4">{{ $peminjam->nama }}</td>
                                 <td class="py-3 px-4">{{ $peminjam->npm }}</td>
                                 <td class="py-3 px-4">{{ $peminjam->password }}</td>
                                 <td class="py-3 px-4 text-center">

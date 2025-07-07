@@ -23,29 +23,25 @@
             <nav class="flex-1 py-4 flex flex-col gap-2">
                 <ul class="space-y-2">
                     <li>
-                        <a href="{{ route('dashboard_admin') }}"
-                        class="flex items-center px-6 py-3 {{ Route::is('dashboard_admin') ? 'bg-birutua2 border-l-4 border-blue-600' : 'hover:bg-birutua2' }} rounded text-white font-semibold transition">
+                        <a href="{{ route('dashboard_admin') }}" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-display mr-3 text-blue-600 text-lg"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('data_barang_admin') }}"
-                        class="flex items-center px-6 py-3 {{ Route::is('data_barang_admin') ? 'bg-birutua2 border-l-4 border-orange-400' : 'hover:bg-birutua2' }} rounded text-white font-semibold transition">
+                        <a href="{{ route('data_barang_admin') }}" class="flex items-center px-6 py-3 bg-birutua2 rounded text-white font-semibold border-l-4 border-orange-400">
                             <i class="fa-solid fa-box mr-3 text-orange-400 text-lg"></i>
                             <span>Data Barang</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('data_peminjam') }}"
-                        class="flex items-center px-6 py-3 {{ Route::is('data_peminjam') ? 'bg-birutua2 border-l-4 border-orange-400' : 'hover:bg-birutua2' }} rounded text-white font-semibold transition">
+                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-users mr-3 text-orange-400 text-lg"></i>
                             <span>Data Peminjam</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('transaksi_peminjaman_admin') }}"
-                        class="flex items-center px-6 py-3 {{ Route::is('transaksi_peminjaman_admin') ? 'bg-birutua2 border-l-4 border-orange-400' : 'hover:bg-birutua2' }} rounded text-white font-semibold transition">
+                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
                             <i class="fa-solid fa-coins mr-3 text-orange-400 text-lg"></i>
                             <span>Transaksi Peminjaman</span>
                         </a>
@@ -106,7 +102,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                             <div>
                                 <label class="block font-semibold mb-2">Kode Barang</label>
-                                <input type="text" name="kode_barang" value="{{ $kodeBarang }}" class="w-full border rounded px-3 py-2 bg-gray-100 text-gray-700 cursor-not-allowed" readonly>
+                                <input type="text" name="kode_barang" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                             </div>
                             <div>
                                 <label class="block font-semibold mb-2">Nama Barang</label>

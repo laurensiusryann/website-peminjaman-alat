@@ -18,8 +18,14 @@ class PeminjamanController extends Controller
     // Tampilkan daftar peminjaman untuk admin
     public function indexAdmin()
     {
+<<<<<<< HEAD
         $peminjaman = Peminjaman::latest()->get();
         return view('transaksi_peminjaman_admin', compact('peminjaman'));
+=======
+        // Ambil semua barang yang sudah ditambahkan admin
+        $barangs = Barang::all();
+        return view('pinjam_barang', compact('barangs'));
+>>>>>>> main
     }
 
     // Tampilkan form pinjam barang
@@ -41,8 +47,24 @@ class PeminjamanController extends Controller
             'tujuan' => 'required',
         ]);
 
+<<<<<<< HEAD
         // Tidak perlu cek stok dan tidak perlu kurangi stok di sini
         // Simpan peminjaman dengan status awal "Menunggu Konfirmasi"
+=======
+        // Cari barang berdasarkan nama_barang
+        $barang = Barang::where('nama_barang', $request->nama_barang)->first();
+
+        // Cek stok cukup
+        if (!$barang || $barang->unit < $request->jumlah) {
+            return back()->withErrors(['jumlah' => 'Stok barang tidak mencukupi!']);
+        }
+
+        // Kurangi stok barang
+        $barang->unit -= $request->jumlah;
+        $barang->save();
+
+        // Simpan peminjaman
+>>>>>>> main
         Peminjaman::create([
             'nama_peminjam' => $request->nama_peminjam,
             'tanggal_pinjam' => $request->tanggal_pinjam,
