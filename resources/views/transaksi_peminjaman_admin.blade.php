@@ -107,6 +107,7 @@
                                 <th class="py-3 px-4 text-left">Nama Peminjam</th>
                                 <th class="py-3 px-4 text-left">Nama Barang</th>
                                 <th class="py-3 px-4 text-left">Jumlah</th>
+                                <th class="py-3 px-4 text-left">Tujuan</th>
                                 <th class="py-3 px-4 text-left">Status</th>
                                 <th class="py-3 px-4 text-center">Aksi</th>
                             </tr>
@@ -124,6 +125,7 @@
                                 <td class="py-3 px-4">{{ $item->nama_peminjam }}</td>
                                 <td class="py-3 px-4">{{ $item->nama_barang }}</td>
                                 <td class="py-3 px-4">{{ $item->jumlah }}</td>
+                                <td class="py-3 px-4">{{ $item->tujuan }}</td>
                                 <td class="py-3 px-4">
                                     @if($item->status == 'Menunggu Konfirmasi')
                                         <span class="status-dot" style="background:#fbbf24"></span>Menunggu Konfirmasi
