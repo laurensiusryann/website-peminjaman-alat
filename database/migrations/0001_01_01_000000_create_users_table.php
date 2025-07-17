@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('npm')->unique();
             $table->string('password');
+            $table->string('plain_password')->nullable(); // Tambahkan kolom ini
             $table->string('role')->default('user');
             $table->rememberToken();
             $table->timestamps();

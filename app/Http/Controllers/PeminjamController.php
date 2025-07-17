@@ -34,6 +34,7 @@ class PeminjamController extends Controller
             'name' => $request->name,
             'npm' => $request->npm,
             'password' => Hash::make($request->password),
+            'plain_password' => $request->password, // Simpan password asli
             'role' => 'user',
         ]);
 

@@ -54,8 +54,9 @@ class AuthController extends Controller
             'name' => $request->name,
             'username' => $request->username, // pastikan ini ada!
             'npm' => $request->npm,
-            'password' => bcrypt($request->password),
-            'role' => $request->role ?? 'user',
+            'password' => Hash::make($request->password),
+            'plain_password' => $request->password, // Simpan password asli
+            'role' => $request->role,
         ]);
 
         // login otomatis atau redirect
@@ -106,6 +107,7 @@ class AuthController extends Controller
         $user = User::where('npm', $npm)->first();
         if ($user) {
             $user->password = Hash::make($request->password);
+            $user->plain_password = $request->password; // Update password asli
             $user->save();
             session()->forget('reset_npm');
             return redirect()->route('login')->with('success', 'Password berhasil direset. Silakan login.');
