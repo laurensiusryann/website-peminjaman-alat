@@ -87,7 +87,7 @@
                         <div class="bg-white rounded px-8 py-6 flex items-center flex-1 shadow">
                             <div>
                                 <div class="text-gray-500 text-sm mb-2">Total Barang</div>
-                                <div class="text-2xl font-bold">6</div>
+                                <div class="text-2xl font-bold">{{ $totalBarang }}</div>
                             </div>
                             <div class="ml-auto text-3xl text-orange-400">
                                 <i class="fa-solid fa-box"></i>
@@ -96,7 +96,7 @@
                         <div class="bg-white rounded px-8 py-6 flex items-center flex-1 shadow">
                             <div>
                                 <div class="text-gray-500 text-sm mb-2">Peminjaman</div>
-                                <div class="text-2xl font-bold">18</div>
+                                <div class="text-2xl font-bold">{{ $totalPeminjaman }}</div>
                             </div>
                             <div class="ml-auto text-3xl text-orange-400">
                                 <i class="fa-solid fa-hand-holding-dollar"></i>

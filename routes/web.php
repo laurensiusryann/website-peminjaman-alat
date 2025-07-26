@@ -4,6 +4,8 @@ use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PeminjamController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardUserController;
+use App\Http\Controllers\DashboardAdminController;
 
 Route::get('/', function () {
     return view('login');
@@ -27,14 +29,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // PROTECTED ROUTES (hanya untuk user login & admin)
 Route::middleware('auth')->group(function () {
     // Dashboard User
-    Route::get('/dashboard_user', function () {
-        return view('dashboard_user');
-    })->name('dashboard_user');
+    Route::get('/dashboard_user', [DashboardUserController::class, 'index'])->name('dashboard_user');
 
     // Dashboard Admin
-    Route::get('/dashboard_admin', function () {
-        return view('dashboard_admin');
-    })->name('dashboard_admin');
+    Route::get('/dashboard_admin', [DashboardAdminController::class, 'index'])->name('dashboard_admin');
 
     // Profile (User & Admin)
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
