@@ -76,4 +76,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/laporan_pengembalian', function () {
         return view('laporan_pengembalian');
     })->name('laporan_pengembalian');
+
+    // Laporan Pengembalian Admin
+    Route::get('/laporan_pengembalian_admin', [PeminjamanController::class, 'laporanPengembalian'])->name('laporan_pengembalian_admin');
+    Route::post('/pengembalian/{id}/konfirmasi', [PeminjamanController::class, 'konfirmasiPengembalian'])->name('pengembalian.konfirmasi');
+
 });

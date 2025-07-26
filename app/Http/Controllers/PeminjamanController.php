@@ -103,4 +103,33 @@ class PeminjamanController extends Controller
         $peminjaman = Peminjaman::findOrFail($id);
         return view('detail_peminjaman', compact('peminjaman'));
     }
+    
+        // Laporan Pengembalian (Admin)
+    public function laporanPengembalian()
+    {
+        $peminjaman = Peminjaman::where('status', 'Disetujui')->get();
+        return view('laporan_pengembalian_admin', compact('peminjaman'));
+    }
+
+    // Konfirmasi Pengembalian
+    public function konfirmasiPengembalian($id)
+    {
+        $peminjaman = Peminjaman::findOrFail($id);
+
+        // Kembalikan stok barang
+        $barang = Barang::where('nama_barang', $peminjaman->nama_barang)->first();
+        if ($barang) {
+            $barang->unit += $peminjaman->jumlah;
+            $barang->save();
+        }
+
+        // Update status dan tanggal kembali
+        $peminjaman->status = 'Dikembalikan';
+        $peminjaman->tanggal_kembali = now();
+        $peminjaman->save();
+
+        return redirect()->route('laporan_pengembalian_admin')->with('success', 'Pengembalian berhasil dikonfirmasi.');
+}
+
+
 }
