@@ -3,6 +3,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PeminjamController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('login');
@@ -35,6 +36,11 @@ Route::middleware('auth')->group(function () {
         return view('dashboard_admin');
     })->name('dashboard_admin');
 
+    // Profile (User & Admin)
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
     // Data Barang untuk User
     Route::get('/data_barang', [BarangController::class, 'indexUser'])->name('data_barang');
 
@@ -53,17 +59,23 @@ Route::middleware('auth')->group(function () {
 
     // Daftar transaksi peminjaman (User)
     Route::get('/transaksi_peminjaman', [PeminjamanController::class, 'index'])->name('transaksi_peminjaman');
-    // Form pinjam barang
     Route::get('/pinjam_barang', [PeminjamanController::class, 'create'])->name('pinjam_barang');
-    // Proses simpan pinjam barang
     Route::post('/pinjam_barang', [PeminjamanController::class, 'store'])->name('pinjam_barang.store');
-    // Batalkan peminjaman (User)
     Route::delete('/peminjaman/{id}/cancel', [PeminjamanController::class, 'cancel'])->name('peminjaman.cancel');
-    // Detail peminjaman (User)
     Route::get('/peminjaman/{id}/detail', [PeminjamanController::class, 'show'])->name('peminjaman.detail');
 
     // Transaksi Peminjaman Admin (daftar & aksi setujui/tolak)
     Route::get('/transaksi_peminjaman_admin', [PeminjamanController::class, 'indexAdmin'])->name('transaksi_peminjaman_admin');
     Route::post('/peminjaman/{id}/approve', [PeminjamanController::class, 'approve'])->name('peminjaman.approve');
     Route::post('/peminjaman/{id}/reject', [PeminjamanController::class, 'reject'])->name('peminjaman.reject');
+
+    // Laporan Peminjaman
+    Route::get('/laporan_peminjaman', function () {
+        return view('laporan_peminjaman');
+    })->name('laporan_peminjaman');
+
+    // Laporan Pengembalian
+    Route::get('/laporan_pengembalian', function () {
+        return view('laporan_pengembalian');
+    })->name('laporan_pengembalian');
 });

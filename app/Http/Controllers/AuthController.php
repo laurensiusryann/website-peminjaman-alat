@@ -43,19 +43,25 @@ class AuthController extends Controller
     // Proses register
     public function register(Request $request) {
         $request->validate([
-            'name' => 'required',
-            'npm' => 'required|unique:users',
-            'password' => 'required|confirmed|min:6',
-            'role' => 'required|in:user,admin',
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username',
+            'npm' => 'required|string|max:255',
+            'password' => 'required|string|confirmed|min:6',
+            // tambahkan validasi lain jika perlu
         ]);
-        User::create([
+
+        $user = User::create([
             'name' => $request->name,
+            'username' => $request->username, // pastikan ini ada!
             'npm' => $request->npm,
             'password' => Hash::make($request->password),
             'plain_password' => $request->password, // Simpan password asli
             'role' => $request->role,
         ]);
-        return redirect()->route('login')->with('success', 'Registrasi berhasil, silakan login.');
+
+        // login otomatis atau redirect
+        auth()->login($user);
+        return redirect()->route('dashboard_user');
     }
 
     // Logout
