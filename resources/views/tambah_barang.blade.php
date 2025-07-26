@@ -106,7 +106,8 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                             <div>
                                 <label class="block font-semibold mb-2">Kode Barang</label>
-                                <input type="text" name="kode_barang" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                                <input type="text" name="kode_barang" value="{{ $nextKode }}" 
+                                    class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" readonly>
                             </div>
                             <div>
                                 <label class="block font-semibold mb-2">Nama Barang</label>

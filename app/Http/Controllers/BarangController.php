@@ -1,5 +1,4 @@
 <?php
-// app/Http/Controllers/BarangController.php
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -21,7 +20,16 @@ class BarangController extends Controller
 
     public function create()
     {
-        return view('tambah_barang');
+        // Generate kode barang otomatis
+        $lastBarang = Barang::orderBy('id', 'desc')->first();
+        $nextKode = 'BRG0001'; // default pertama
+
+        if ($lastBarang) {
+            $lastNumber = intval(substr($lastBarang->kode_barang, 3));
+            $nextKode = 'BRG' . str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
+        }
+
+        return view('tambah_barang', compact('nextKode'));
     }
 
     public function store(Request $request)
@@ -37,6 +45,7 @@ class BarangController extends Controller
         Barang::create($request->all());
         return redirect()->route('data_barang_admin')->with('success', 'Barang berhasil ditambahkan!');
     }
+
     public function edit($id)
     {
         $barang = Barang::findOrFail($id);
