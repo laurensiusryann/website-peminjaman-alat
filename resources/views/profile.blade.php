@@ -56,7 +56,7 @@
                         <div class="relative inline-block">
                             <button id="notifBtn" class="relative focus:outline-none text-gray-400 text-xl">
                                 <i class="fa-regular fa-bell"></i>
-                                @php $notifCount = $notifs->count(); @endphp
+                                @php $notifCount = count($notifs); @endphp
                                 @if($notifCount > 0)
                                 <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">{{ $notifCount }}</span>
                                 @endif
