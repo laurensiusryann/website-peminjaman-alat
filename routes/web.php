@@ -30,6 +30,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     // Dashboard User
     Route::get('/dashboard_user', [DashboardUserController::class, 'index'])->name('dashboard_user');
+    Route::post('/notifikasi/baca/{id}', [DashboardUserController::class, 'bacaNotifikasi'])->name('notifikasi.baca');
 
     // Dashboard Admin
     Route::get('/dashboard_admin', [DashboardAdminController::class, 'index'])->name('dashboard_admin');
@@ -80,5 +81,4 @@ Route::middleware('auth')->group(function () {
     // Laporan Pengembalian Admin
     Route::get('/laporan_pengembalian_admin', [PeminjamanController::class, 'laporanPengembalian'])->name('laporan_pengembalian_admin');
     Route::post('/pengembalian/{id}/konfirmasi', [PeminjamanController::class, 'konfirmasiPengembalian'])->name('pengembalian.konfirmasi');
-
 });

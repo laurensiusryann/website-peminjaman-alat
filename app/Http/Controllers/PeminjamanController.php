@@ -5,14 +5,36 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Peminjaman;
 use App\Models\Barang;
+use Illuminate\Support\Facades\Auth;
 
 class PeminjamanController extends Controller
 {
-    // Tampilkan daftar peminjaman untuk user
-    public function index()
+    // Tampilkan daftar peminjaman untuk user (dengan search)
+    public function index(Request $request)
     {
-        $peminjaman = Peminjaman::latest()->get();
-        return view('transaksi_peminjaman', compact('peminjaman'));
+        $user = Auth::user();
+        $q = $request->query('q');
+        $peminjaman = Peminjaman::where('nama_peminjam', $user->name)
+            ->when($q, function($query) use ($q) {
+                $query->where('nama_barang', 'like', "%$q%")
+                      ->orWhere('status', 'like', "%$q%");
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Notifikasi: status Disetujui/Ditolak, urut terbaru, max 10
+        $notifs = Peminjaman::where('nama_peminjam', $user->name)
+            ->whereIn('status', ['Disetujui', 'Ditolak'])
+            ->orderBy('updated_at', 'desc')
+            ->take(10)
+            ->get();
+
+        return view('transaksi_peminjaman', [
+            'peminjaman' => $peminjaman,
+            'full_name' => $user->name,
+            'notifs' => $notifs,
+            'q' => $q,
+        ]);
     }
 
     // Tampilkan daftar peminjaman untuk admin
@@ -41,8 +63,6 @@ class PeminjamanController extends Controller
             'tujuan' => 'required',
         ]);
 
-        // Tidak perlu cek stok dan tidak perlu kurangi stok di sini
-        // Simpan peminjaman dengan status awal "Menunggu Konfirmasi"
         Peminjaman::create([
             'nama_peminjam' => $request->nama_peminjam,
             'tanggal_pinjam' => $request->tanggal_pinjam,
@@ -53,7 +73,6 @@ class PeminjamanController extends Controller
             'status' => 'Menunggu Konfirmasi',
         ]);
 
-        // Redirect ke halaman transaksi peminjaman user
         return redirect()->route('transaksi_peminjaman')->with('success', 'Peminjaman berhasil diajukan!');
     }
 
@@ -62,13 +81,11 @@ class PeminjamanController extends Controller
     {
         $peminjaman = Peminjaman::findOrFail($id);
 
-        // Cek stok barang sebelum menyetujui
         $barang = Barang::where('nama_barang', $peminjaman->nama_barang)->first();
         if (!$barang || $barang->unit < $peminjaman->jumlah) {
             return redirect()->route('transaksi_peminjaman_admin')->with('error', 'Stok barang tidak mencukupi!');
         }
 
-        // Kurangi stok barang
         $barang->unit -= $peminjaman->jumlah;
         $barang->save();
 
@@ -101,10 +118,14 @@ class PeminjamanController extends Controller
     public function show($id)
     {
         $peminjaman = Peminjaman::findOrFail($id);
-        return view('detail_peminjaman', compact('peminjaman'));
+        $user = Auth::user();
+        return view('detail_peminjaman', [
+            'peminjaman' => $peminjaman,
+            'full_name' => $user->name,
+        ]);
     }
     
-        // Laporan Pengembalian (Admin)
+    // Laporan Pengembalian (Admin)
     public function laporanPengembalian()
     {
         $peminjaman = Peminjaman::where('status', 'Disetujui')->get();
@@ -116,20 +137,16 @@ class PeminjamanController extends Controller
     {
         $peminjaman = Peminjaman::findOrFail($id);
 
-        // Kembalikan stok barang
         $barang = Barang::where('nama_barang', $peminjaman->nama_barang)->first();
         if ($barang) {
             $barang->unit += $peminjaman->jumlah;
             $barang->save();
         }
 
-        // Update status dan tanggal kembali
         $peminjaman->status = 'Dikembalikan';
         $peminjaman->tanggal_kembali = now();
         $peminjaman->save();
 
         return redirect()->route('laporan_pengembalian_admin')->with('success', 'Pengembalian berhasil dikonfirmasi.');
-}
-
-
+    }
 }

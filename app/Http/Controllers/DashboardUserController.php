@@ -16,11 +16,33 @@ class DashboardUserController extends Controller
         $totalBarang = Barang::count();
 
         // Peminjaman aktif (Disetujui, belum dikembalikan)
-        $totalPeminjaman = Peminjaman::where('nama_peminjam', $user->name)
-                                    ->where('status', 'Disetujui')
-                                    ->whereNull('tanggal_kembali')
-                                    ->count();
+        $totalPeminjaman = Peminjaman::where('status', 'Disetujui')->count();
 
-        return view('dashboard_user', compact('totalBarang', 'totalPeminjaman'));
+        // Notifikasi: status Disetujui/Ditolak, urut terbaru, max 10, hanya yang belum dibaca
+        $notifs = Peminjaman::where('nama_peminjam', $user->name)
+            ->whereIn('status', ['Disetujui', 'Ditolak'])
+            ->where('dibaca', false)
+            ->orderBy('updated_at', 'desc')
+            ->take(10)
+            ->get();
+
+        return view('dashboard_user', [
+            'totalBarang' => $totalBarang,
+            'totalPeminjaman' => $totalPeminjaman,
+            'full_name' => $user->name,
+            'notifs' => $notifs,
+        ]);
+    }
+
+    // Tandai notifikasi telah dibaca dan redirect ke transaksi_peminjaman
+    public function bacaNotifikasi($id)
+    {
+        $user = Auth::user();
+        $notif = Peminjaman::where('id', $id)
+            ->where('nama_peminjam', $user->name)
+            ->firstOrFail();
+        $notif->dibaca = true;
+        $notif->save();
+        return redirect()->route('transaksi_peminjaman');
     }
 }

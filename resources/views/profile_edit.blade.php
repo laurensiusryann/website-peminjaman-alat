@@ -42,19 +42,6 @@
                     </li>
                 </ul>
                 <div class="border-b border-birutua2 my-4"></div>
-                <ul class="space-y-2">
-                    <li>
-                        <a href="{{ route('laporan_peminjaman') }}" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
-                            <i class="fa-solid fa-chart-line mr-3 text-blue-600 text-lg"></i>
-                            <span>Laporan Peminjaman</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('laporan_pengembalian') }}" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
-                            <i class="fa-solid fa-rotate-left mr-3 text-blue-600 text-lg"></i>
-                            <span>Laporan Pengembalian</span>
-                        </a>
-                    </li>
                 </ul>
             </nav>
         </aside>
@@ -140,10 +127,6 @@
                         <div class="mb-4">
                             <label class="block text-gray-700 font-semibold mb-1">Full Name</label>
                             <input type="text" name="full_name" value="{{ old('full_name', $full_name) }}" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700 font-semibold mb-1">Username</label>
-                            <input type="text" name="username" value="{{ old('username', $username) }}" class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />
                         </div>
                         <div class="flex justify-end">
                             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold">Simpan</button>

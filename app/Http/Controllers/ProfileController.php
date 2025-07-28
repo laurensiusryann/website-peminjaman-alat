@@ -12,7 +12,6 @@ class ProfileController extends Controller
         $user = Auth::user();
         return view('profile', [
             'full_name' => $user->name,
-            'username' => $user->username,
         ]);
     }
 
@@ -21,7 +20,6 @@ class ProfileController extends Controller
         $user = Auth::user();
         return view('profile_edit', [
             'full_name' => $user->name,
-            'username' => $user->username,
         ]);
     }
 
@@ -29,7 +27,6 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $user->name = $request->input('full_name');
-        $user->username = $request->input('username');
         $user->save();
 
         return redirect()->route('profile')->with('success', 'Profile updated!');

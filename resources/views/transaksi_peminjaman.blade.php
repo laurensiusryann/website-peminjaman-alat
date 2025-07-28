@@ -43,20 +43,6 @@
                     </li>
                 </ul>
                 <div class="border-b border-birutua2 my-4"></div>
-                <ul class="space-y-2">
-                    <li>
-                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
-                            <i class="fa-solid fa-chart-line mr-3 text-blue-600 text-lg"></i>
-                            <span>Laporan Peminjaman</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
-                            <i class="fa-solid fa-rotate-left mr-3 text-blue-600 text-lg"></i>
-                            <span>Laporan Pengembalian</span>
-                        </a>
-                    </li>
-                </ul>
             </nav>
         </aside>
         <!-- Main Content -->
@@ -64,25 +50,50 @@
             <div class="bg-birutua">
                 <header class="flex items-center justify-between px-8 py-6">
                     <div></div>
-                    <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-6 relative">
                         <button class="text-gray-400 text-xl">
                             <i class="fa-regular fa-bell"></i>
                         </button>
-                        <div class="flex items-center space-x-2">
-                            <span class="bg-green-500 text-white font-bold rounded-full w-10 h-10 flex items-center justify-center">LR</span>
-                            <span class="text-white">Ryan</span>
+                        <!-- Profile Dropdown -->
+                        <div class="relative">
+                            <button id="profileBtn" class="flex items-center focus:outline-none">
+                                <span class="bg-green-500 text-white font-bold rounded-full w-10 h-10 flex items-center justify-center">
+                                    {{ strtoupper(substr($full_name, 0, 1)) }}{{ strtoupper(substr(explode(' ', $full_name)[1] ?? '', 0, 1)) }}
+                                </span>
+                                <span class="text-white ml-2">{{ $full_name }}</span>
+                            </button>
+                            <div id="profileMenu" class="absolute right-0 mt-2 w-48 bg-white rounded shadow-lg py-2 z-20 hidden">
+                                <a href="{{ route('profile') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">View Profile</a>
+                                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Edit Profile</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</button>
+                                </form>
+                            </div>
                         </div>
+                        <script>
+                            // Toggle profile dropdown
+                            const btn = document.getElementById('profileBtn');
+                            const menu = document.getElementById('profileMenu');
+                            document.addEventListener('click', function(e) {
+                                if (btn && btn.contains(e.target)) {
+                                    menu.classList.toggle('hidden');
+                                } else if (menu) {
+                                    menu.classList.add('hidden');
+                                }
+                            });
+                        </script>
                     </div>
                 </header>
                 <div class="px-8 pt-2 pb-8">
                     <div class="mb-4">
-                        <input type="text" placeholder="Search" class="px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-64">
+                        <input type="text" id="searchInput" placeholder="Search" class="px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-64" autocomplete="off">
                     </div>
                     <div class="flex items-center space-x-2 mb-6">
-                        <span class="bg-white text-blue-600 px-3 py-2 rounded font-semibold flex items-center shadow">
+                        <a href="{{ route('dashboard_user') }}" class="flex items-center bg-white text-blue-600 px-3 py-2 rounded font-semibold shadow hover:bg-blue-50 transition">
                             <i class="fa-solid fa-house mr-2"></i>
-                            / Transaksi Peminjaman
-                        </span>
+                            <span>Dashboard</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -94,7 +105,7 @@
                             <i class="fa-solid fa-plus mr-2"></i> Tambah Peminjaman
                         </button>
                     </div>
-                    <table class="min-w-full text-sm">
+                    <table class="min-w-full text-sm" id="peminjamanTable">
                         <thead>
                             <tr class="border-b">
                                 <th class="py-3 px-4 text-left">No</th>
@@ -144,7 +155,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" class="text-center py-6 text-gray-500">Belum ada data peminjaman.</td>
+                                <td colspan="8" class="text-center py-6 text-gray-500">Belum ada data peminjaman.</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -153,5 +164,34 @@
             </div>
         </main>
     </div>
+    <script>
+        // Client-side filter for transaksi_peminjaman, nomor tetap sesuai data asli
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#peminjamanTable tbody tr');
+            rows.forEach(row => {
+                // Cek jika baris adalah baris data (bukan baris kosong)
+                if (row.querySelectorAll('td').length === 8) {
+                    const tglPinjam = row.children[1]?.textContent.toLowerCase() || '';
+                    const tglKembali = row.children[2]?.textContent.toLowerCase() || '';
+                    const namaPeminjam = row.children[3]?.textContent.toLowerCase() || '';
+                    const namaBarang = row.children[4]?.textContent.toLowerCase() || '';
+                    const status = row.children[6]?.textContent.toLowerCase() || '';
+                    if (
+                        filter === '' ||
+                        tglPinjam.includes(filter) ||
+                        tglKembali.includes(filter) ||
+                        namaPeminjam.includes(filter) ||
+                        namaBarang.includes(filter) ||
+                        status.includes(filter)
+                    ) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

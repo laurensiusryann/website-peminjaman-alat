@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Barang;
+use Illuminate\Support\Facades\Auth;
 
 class BarangController extends Controller
 {
@@ -12,10 +13,20 @@ class BarangController extends Controller
         return view('data_barang_admin', compact('barangs'));
     }
     
-    public function indexUser()
+    // Data Barang untuk User dengan fitur search
+    public function indexUser(Request $request)
     {
-        $barangs = Barang::all();
-        return view('data_barang', compact('barangs'));
+        $q = $request->query('q');
+        $barangs = Barang::when($q, function($query) use ($q) {
+            $query->where('nama_barang', 'like', "%$q%")
+                  ->orWhere('kode_barang', 'like', "%$q%");
+        })->get();
+        $user = Auth::user();
+        return view('data_barang', [
+            'barangs' => $barangs,
+            'full_name' => $user->name,
+            'q' => $q,
+        ]);
     }
 
     public function create()

@@ -44,7 +44,6 @@ class AuthController extends Controller
     public function register(Request $request) {
         $request->validate([
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,username',
             'npm' => 'required|string|max:255',
             'password' => 'required|string|confirmed|min:6',
             // tambahkan validasi lain jika perlu
@@ -52,7 +51,6 @@ class AuthController extends Controller
 
         $user = User::create([
             'name' => $request->name,
-            'username' => $request->username, // pastikan ini ada!
             'npm' => $request->npm,
             'password' => Hash::make($request->password),
             'plain_password' => $request->password, // Simpan password asli
@@ -74,7 +72,7 @@ class AuthController extends Controller
 
     // Tampilkan form lupa password
     public function showForgot() {
-        return view('forgot-password');
+        return view('forgot_password');
     }
 
     // Proses lupa password (cek NPM, simpan ke session, redirect ke reset)
@@ -92,7 +90,7 @@ class AuthController extends Controller
         if (!session('reset_npm')) {
             return redirect()->route('password.request');
         }
-        return view('reset-password');
+        return view('reset_password');
     }
 
     // Proses reset password

@@ -42,19 +42,6 @@
                     </li>
                 </ul>
                 <div class="border-b border-birutua2 my-4"></div>
-                <ul class="space-y-2">
-                    <li>
-                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
-                            <i class="fa-solid fa-chart-line mr-3 text-blue-600 text-lg"></i>
-                            <span>Laporan Peminjaman</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center px-6 py-3 text-white hover:bg-birutua2 rounded transition font-semibold">
-                            <i class="fa-solid fa-rotate-left mr-3 text-blue-600 text-lg"></i>
-                            <span>Laporan Pengembalian</span>
-                        </a>
-                    </li>
                 </ul>
             </nav>
         </aside>
@@ -68,8 +55,10 @@
                             <i class="fa-regular fa-bell"></i>
                         </button>
                         <div class="flex items-center space-x-2">
-                            <span class="bg-green-500 text-white font-bold rounded-full w-10 h-10 flex items-center justify-center">LR</span>
-                            <span class="text-white">Ryan</span>
+                            <span class="bg-green-500 text-white font-bold rounded-full w-10 h-10 flex items-center justify-center">
+                                {{ strtoupper(substr($full_name, 0, 1)) }}{{ strtoupper(substr(explode(' ', $full_name)[1] ?? '', 0, 1)) }}
+                            </span>
+                            <span class="text-white">{{ $full_name }}</span>
                         </div>
                     </div>
                 </header>

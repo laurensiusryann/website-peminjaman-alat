@@ -3,30 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lupa Password | KampusPinjam</title>
+    <title>Reset Password | KampusPinjam</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body class="bg-gray-100 min-h-screen flex">
     <!-- Left: Form -->
     <div class="w-full md:w-1/2 flex flex-col justify-center px-8 md:px-24 py-12 bg-white min-h-screen relative">
-        <h2 class="text-2xl font-bold text-center mb-2">Lupa Password</h2>
+        <h2 class="text-2xl font-bold text-center mb-2">Reset Password</h2>
         <h1 class="text-3xl font-bold text-center mb-4">KampusPinjam</h1>
-        <p class="text-center text-gray-500 mb-8">Masukkan NPM Anda untuk reset password</p>
-        @if(session('status'))
-            <div class="mb-4 text-green-600 text-center">
-                {{ session('status') }}
-            </div>
-        @endif
+        <p class="text-center text-gray-500 mb-8">Masukkan password baru Anda</p>
         @if($errors->any())
             <div class="mb-4 text-red-600 text-center">
                 {{ $errors->first() }}
             </div>
         @endif
-        <form method="POST" action="{{ route('password.forgot') }}" class="w-full max-w-md mx-auto">
+        <form method="POST" action="{{ route('password.update') }}" class="w-full max-w-md mx-auto">
             @csrf
-            <input type="text" name="npm" placeholder="NPM" class="w-full mb-4 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-            <button type="submit" class="w-full bg-black text-white py-2 rounded font-semibold hover:bg-gray-800 transition">Kirim</button>
+            <input type="hidden" name="npm" value="{{ $npm ?? '' }}">
+            <input type="password" name="password" placeholder="Password Baru" class="w-full mb-4 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+            <input type="password" name="password_confirmation" placeholder="Konfirmasi Password" class="w-full mb-6 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+            <button type="submit" class="w-full bg-black text-white py-2 rounded font-semibold hover:bg-gray-800 transition">Reset Password</button>
         </form>
         <div class="text-center mt-6">
             <span class="text-gray-600">Sudah ingat password? </span>

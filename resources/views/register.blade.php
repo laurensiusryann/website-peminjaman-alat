@@ -20,7 +20,6 @@
             @csrf
             <input type="hidden" name="role" value="user">
             <input type="text" name="name" placeholder="Nama" class="w-full mb-4 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-            <input type="text" name="username" placeholder="Username" class="w-full mb-4 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
             <input type="text" name="npm" placeholder="NPM" class="w-full mb-4 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
             <input type="password" name="password" placeholder="Password" class="w-full mb-4 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
             <input type="password" name="password_confirmation" placeholder="RePassword" class="w-full mb-6 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
