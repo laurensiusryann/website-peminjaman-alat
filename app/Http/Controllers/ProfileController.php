@@ -10,8 +10,11 @@ class ProfileController extends Controller
     public function show()
     {
         $user = Auth::user();
+        // Jika belum ada fitur notifikasi, kirim array kosong
+        $notifs = []; // Ganti dengan query notifikasi jika sudah ada
         return view('profile', [
             'full_name' => $user->name,
+            'notifs' => $notifs,
         ]);
     }
 
@@ -25,6 +28,9 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+        ]);
         $user = Auth::user();
         $user->name = $request->input('full_name');
         $user->save();
