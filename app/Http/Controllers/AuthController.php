@@ -57,9 +57,8 @@ class AuthController extends Controller
             'role' => $request->role,
         ]);
 
-        // login otomatis atau redirect
-        auth()->login($user);
-        return redirect()->route('dashboard_user');
+        // Setelah registrasi, redirect ke login dengan pesan sukses
+        return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 
     // Logout
