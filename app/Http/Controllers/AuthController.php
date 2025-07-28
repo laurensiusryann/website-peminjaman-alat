@@ -44,7 +44,7 @@ class AuthController extends Controller
     public function register(Request $request) {
         $request->validate([
             'name' => 'required|string|max:255',
-            'npm' => 'required|string|max:255',
+            'npm' => 'required|string|max:255|unique:users,npm',
             'password' => 'required|string|confirmed|min:6',
             // tambahkan validasi lain jika perlu
         ]);
