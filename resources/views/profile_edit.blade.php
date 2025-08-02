@@ -42,30 +42,61 @@
                     </li>
                 </ul>
                 <div class="border-b border-birutua2 my-4"></div>
-                </ul>
             </nav>
         </aside>
+
         <!-- Main Content -->
         <main class="flex-1 flex flex-col bg-white">
+            <!-- Header -->
             <div class="bg-birutua">
                 <header class="flex items-center justify-between px-8 py-6">
                     <div></div>
                     <div class="flex items-center space-x-6 relative">
-                        <!-- Notification Bell & Pop Menu -->
+                        <!-- Notifikasi -->
                         <div class="relative inline-block">
-                            <button id="notifBtn" class="relative focus:outline-none">
-                                <i class="fa-regular fa-bell text-gray-400 text-2xl"></i>
-                                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">2</span>
+                            <button id="notifBtn" class="relative focus:outline-none text-gray-400 text-xl">
+                                <i class="fa-regular fa-bell"></i>
+                                @php $notifCount = $notifs->count(); @endphp
+                                @if($notifCount > 0)
+                                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">{{ $notifCount }}</span>
+                                @endif
                             </button>
-                            <div id="notifMenu" class="absolute right-0 mt-2 w-64 bg-white rounded shadow-lg z-30 hidden">
-                                <div class="px-4 py-3 border-b font-semibold">Notification</div>
-                                <ul class="py-2 px-4 text-sm text-gray-800 space-y-2">
-                                    <li>• Peminjaman Barang Disetujui</li>
-                                    <li>• Peminjaman Barang Ditolak</li>
+                            <div id="notifMenu" class="absolute right-0 mt-2 w-72 bg-white rounded shadow-lg z-30 hidden">
+                                <div class="px-4 py-3 border-b font-semibold">Notifikasi</div>
+                                <ul class="py-2 px-4 text-sm text-gray-800 space-y-2 max-h-72 overflow-y-auto">
+                                    @forelse($notifs as $notif)
+                                        <li>
+                                            <form action="{{ route('notifikasi.baca', $notif->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="w-full text-left flex items-start gap-2 hover:bg-gray-100 p-2 rounded">
+                                                    <span class="mt-1">
+                                                        @if($notif->status == 'Disetujui')
+                                                            <i class="fa-solid fa-circle-check text-green-500"></i>
+                                                        @else
+                                                            <i class="fa-solid fa-circle-xmark text-red-500"></i>
+                                                        @endif
+                                                    </span>
+                                                    <div>
+                                                        <div>
+                                                            Peminjaman <b>{{ $notif->nama_barang }}</b>
+                                                            <span class="font-semibold {{ $notif->status == 'Disetujui' ? 'text-green-600' : 'text-red-600' }}">
+                                                                {{ $notif->status }}
+                                                            </span>
+                                                        </div>
+                                                        <div class="text-xs text-gray-400">{{ $notif->updated_at->format('d M Y H:i') }}</div>
+                                                        <div class="text-xs text-blue-500 underline">Lihat Transaksi</div>
+                                                    </div>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    @empty
+                                        <li class="text-gray-400">Belum ada notifikasi.</li>
+                                    @endforelse
                                 </ul>
                             </div>
                         </div>
-                        <!-- Profile Dropdown -->
+
+                        <!-- Profile -->
                         <div class="relative">
                             <button id="profileBtn" class="flex items-center focus:outline-none">
                                 <span class="bg-green-500 text-white font-bold rounded-full w-10 h-10 flex items-center justify-center">
@@ -82,35 +113,32 @@
                                 </form>
                             </div>
                         </div>
+
                         <script>
-                            // Toggle profile dropdown
                             const btn = document.getElementById('profileBtn');
                             const menu = document.getElementById('profileMenu');
                             document.addEventListener('click', function(e) {
-                                if (btn && btn.contains(e.target)) {
+                                if (btn.contains(e.target)) {
                                     menu.classList.toggle('hidden');
-                                } else if (menu) {
+                                } else {
                                     menu.classList.add('hidden');
                                 }
                             });
 
-                            // Toggle notification dropdown
                             const notifBtn = document.getElementById('notifBtn');
                             const notifMenu = document.getElementById('notifMenu');
                             document.addEventListener('click', function(e) {
-                                if (notifBtn && notifBtn.contains(e.target)) {
+                                if (notifBtn.contains(e.target)) {
                                     notifMenu.classList.toggle('hidden');
-                                } else if (notifMenu && !notifMenu.contains(e.target)) {
+                                } else if (!notifMenu.contains(e.target)) {
                                     notifMenu.classList.add('hidden');
                                 }
                             });
                         </script>
                     </div>
                 </header>
+
                 <div class="px-8 pt-2 pb-8">
-                    <div class="mb-4">
-                        <input type="text" placeholder="Search" class="px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 w-64">
-                    </div>
                     <div class="flex items-center space-x-2 mb-6">
                         <span class="bg-white text-blue-600 px-3 py-2 rounded font-semibold flex items-center shadow">
                             <i class="fa-solid fa-house mr-2"></i>
@@ -119,6 +147,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Content -->
             <div class="flex-1 px-8 pb-8 bg-white flex justify-center items-start">
                 <div class="bg-white rounded shadow w-full max-w-xl mt-12 p-8">
                     <h2 class="text-2xl font-bold mb-6">Edit Profile</h2>
